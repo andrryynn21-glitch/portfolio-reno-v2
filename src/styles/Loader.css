@@ -42,7 +42,7 @@
 }
 
 .loader-bar {
-  margin-top: 40px;
+  margin: 40px auto 0;
 
   width: 260px;
 
