@@ -7,8 +7,9 @@ export default defineConfig(({ mode }) => ({
 
   plugins: [
     react(),
+
     visualizer({
-      open: false,
+      open: true,
       filename: "dist/stats.html",
       gzipSize: true,
       brotliSize: true,
