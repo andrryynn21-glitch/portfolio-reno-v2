@@ -28,6 +28,7 @@ const projects = [
     id: 2,
     title: "Portfolio Website",
     category: "Frontend Development",
+    status: "completed",
 
     description:
       "Website portfolio modern menggunakan React.js, Framer Motion, serta desain premium yang responsif.",
