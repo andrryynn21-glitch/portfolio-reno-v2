@@ -2,6 +2,7 @@ import "../styles/Navbar.css";
 import { useEffect, useState } from "react";
 import navLinks from "../data/navLinks";
 import { FaBars, FaTimes } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -58,16 +59,20 @@ function Navbar() {
             R<span>A.</span>
           </a>
 
-          {/* Hamburger */}
-          <button
-            className="menu-toggle"
-            aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          <div className="nav-actions">
+            <ThemeToggle />
+
+            {/* Hamburger */}
+            <button
+              className="menu-toggle"
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
 
           {/* Menu */}
           <ul className={menuOpen ? "nav-menu active" : "nav-menu"}>

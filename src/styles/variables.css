@@ -1,4 +1,9 @@
-:root {
+/* ===========================
+   DARK THEME (DEFAULT)
+=========================== */
+
+:root,
+[data-theme="dark"] {
   --background: #090909;
 
   --surface: #111111;
@@ -22,4 +27,60 @@
   --radius: 18px;
 
   --container: 1280px;
+
+  /* Tambahan */
+  --text: #ffffff;
+
+  --text-secondary: #b5b5b5;
+
+  --card: #151515;
+
+  --navbar: rgba(15, 15, 15, 0.8);
+
+  --gold: #d4af37;
+
+  --gradient-gold: linear-gradient(135deg, #d4af37, #ffd76a);
+}
+
+/* ===========================
+   LIGHT THEME
+=========================== */
+
+[data-theme="light"] {
+  --background: #f8f9fb;
+
+  --surface: #ffffff;
+
+  --surface-light: #f2f2f2;
+
+  --primary: #d4af37;
+
+  --primary-light: #ffd76a;
+
+  --white: #111111;
+
+  --gray: #666666;
+
+  --border: rgba(0, 0, 0, 0.08);
+
+  --shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+
+  --transition: 0.35s ease;
+
+  --radius: 18px;
+
+  --container: 1280px;
+
+  /* Tambahan */
+  --text: #111111;
+
+  --text-secondary: #555555;
+
+  --card: #ffffff;
+
+  --navbar: rgba(255, 255, 255, 0.82);
+
+  --gold: #d4af37;
+
+  --gradient-gold: linear-gradient(135deg, #d4af37, #ffd76a);
 }
