@@ -34,7 +34,7 @@ const projects = [
 
     tech: ["React", "CSS", "Framer Motion"],
 
-    github: null,
+    github: "https://github.com/andrryynn21-glitch/portfolio-reno-v2",
 
     demo: null,
 
@@ -74,7 +74,7 @@ const projects = [
 
     tech: ["React", "Vite", "Framer Motion"],
 
-    github: null,
+    github: "https://andrryynn21-glitch.github.io/aurora-invitation/",
 
     demo: null,
 

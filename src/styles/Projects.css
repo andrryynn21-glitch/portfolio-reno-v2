@@ -343,18 +343,29 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
 
   opacity: 0;
-
   transform: translateY(20px);
 
   transition:
     opacity 0.45s,
     transform 0.45s;
-}
 
+  pointer-events: none; /* TAMBAHKAN */
+}
 .project-card:hover .project-overlay {
   opacity: 1;
-
   transform: translateY(0);
+
+  pointer-events: auto; /* TAMBAHKAN */
+}
+
+.project-content {
+  position: relative;
+  z-index: 5;
+}
+
+.project-image {
+  position: relative;
+  z-index: 1;
 }
 
 .project-overlay h4 {
