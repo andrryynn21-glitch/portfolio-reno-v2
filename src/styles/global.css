@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #090909;
+  color: white;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ===========================
+   Scroll Progress
+=========================== */
+
+.scroll-progress {
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 5px;
+
+  transform-origin: left;
+
+  background: linear-gradient(
+    90deg,
+    #8f6b15,
+    #d4af37,
+    #ffd76a,
+    #fff0b3,
+    #ffd76a,
+    #d4af37
+  );
+
+  z-index: 999999;
+
+  box-shadow:
+    0 0 12px rgba(212, 175, 55, 0.6),
+    0 0 25px rgba(212, 175, 55, 0.45),
+    0 0 40px rgba(212, 175, 55, 0.25);
+}
+
+/* ===========================
+   TEXT SELECTION
+=========================== */
+
+::selection {
+  background: var(--gold);
+  color: #111;
+}
+
+::-moz-selection {
+  background: var(--gold);
+  color: #111;
+}
+
+/* ===========================
+   PREMIUM SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090909;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d4af37, #f5d76e, #b8860b);
+
+  border-radius: 999px;
+
+  border: 2px solid #090909;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ffd700, #d4af37, #b8860b);
+}

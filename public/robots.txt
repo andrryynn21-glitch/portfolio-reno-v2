@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://renoandrian.vercel.app/sitemap.xml
