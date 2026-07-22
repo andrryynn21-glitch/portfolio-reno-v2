@@ -34,7 +34,7 @@ const projects = [
 
     tech: ["React", "CSS", "Framer Motion"],
 
-    github: "https://github.com/andrryynn21-glitch/portfolio-reno-v2",
+    github: "https://andrryynn21-glitch.github.io/portfolio-reno-v2/",
 
     demo: null,
 
