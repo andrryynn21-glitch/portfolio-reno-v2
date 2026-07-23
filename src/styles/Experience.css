@@ -55,12 +55,13 @@
   margin-top: 18px;
   font-size: 54px;
   font-weight: 800;
+  color: var(--text);
 }
 
 .experience-description {
   max-width: 720px;
   margin: 25px auto 0;
-  color: var(--text-secondary);
+  color: var(--text);
   line-height: 1.9;
   font-size: 18px;
 }
@@ -136,12 +137,10 @@
 .timeline-card {
   flex: 1;
 
-  background: rgba(20, 20, 20, 0.72);
-
+  background: var(--card);
   backdrop-filter: blur(18px);
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
+  border: 1px solid var(--border);
   border-radius: 26px;
 
   padding: 34px;
@@ -152,7 +151,7 @@
 
   overflow: hidden;
 
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow);
 }
 
 .timeline-card::before {
@@ -219,6 +218,8 @@
 .timeline-card h3 {
   font-size: 30px;
 
+  color: var(--text);
+
   margin-bottom: 8px;
 
   font-weight: 700;
@@ -235,7 +236,7 @@
 }
 
 .timeline-card p {
-  color: var(--text-secondary);
+  color: var(--text);
 
   line-height: 1.9;
 
@@ -259,12 +260,9 @@
 
   border-radius: 999px;
 
-  background: #1b1b1b;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  color: #d8d8d8;
-
+  background: var(--surface-light);
+  border: 1px solid var(--border);
+  color: var(--text);
   font-size: 13px;
 
   transition: 0.35s;

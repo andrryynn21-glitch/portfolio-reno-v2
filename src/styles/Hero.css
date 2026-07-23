@@ -67,11 +67,11 @@
 }
 
 .hero h2 {
-  color: var(--text-secondary);
+  color: var(--text);
 
   margin-bottom: 25px;
 
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .hero p {
@@ -81,7 +81,7 @@
 
   line-height: 1.9;
 
-  color: var(--text-secondary);
+  color: var(--text);
 
   margin: 30px 0 40px;
 }

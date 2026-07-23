@@ -1,86 +1,90 @@
-/* ===========================
+/* ==========================================
    DARK THEME (DEFAULT)
-=========================== */
+========================================== */
 
 :root,
 [data-theme="dark"] {
+  /* Background */
   --background: #090909;
-
   --surface: #111111;
-
   --surface-light: #1a1a1a;
+  --card: #151515;
+  --card-hover: #1f1f1f;
+  --navbar: rgba(9, 9, 9, 0.75);
 
+  /* Text */
+  --text: #ffffff;
+  --text-secondary: #e5e5e5;
+  --text-muted: #a8a8a8;
+
+  /* Brand */
+  --gold: #d4af37;
   --primary: #d4af37;
+  --primary-light: #ffd76a;
+  --gradient-gold: linear-gradient(135deg, #d4af37, #ffd76a);
 
-  --primary-light: #f5c451;
+  /* Border */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(212, 175, 55, 0.35);
 
-  --white: #ffffff;
-
-  --gray: #a3a3a3;
-
-  --border: #262626;
-
+  /* Shadow */
   --shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
 
-  --transition: 0.35s ease;
+  /* Button */
+  --button-text: #111111;
 
+  /* Input */
+  --input-bg: #171717;
+  --input-text: #ffffff;
+  --placeholder: #9a9a9a;
+
+  /* Layout */
   --radius: 18px;
-
   --container: 1280px;
-
-  /* Tambahan */
-  --text: #ffffff;
-
-  --text-secondary: #b5b5b5;
-
-  --card: #151515;
-
-  --navbar: rgba(15, 15, 15, 0.8);
-
-  --gold: #d4af37;
-
-  --gradient-gold: linear-gradient(135deg, #d4af37, #ffd76a);
+  --transition: 0.35s ease;
 }
 
-/* ===========================
+/* ==========================================
    LIGHT THEME
-=========================== */
+========================================== */
 
 [data-theme="light"] {
+  /* Background */
   --background: #f8f9fb;
-
   --surface: #ffffff;
-
   --surface-light: #f2f2f2;
-
-  --primary: #d4af37;
-
-  --primary-light: #ffd76a;
-
-  --white: #111111;
-
-  --gray: #666666;
-
-  --border: rgba(0, 0, 0, 0.08);
-
-  --shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
-
-  --transition: 0.35s ease;
-
-  --radius: 18px;
-
-  --container: 1280px;
-
-  /* Tambahan */
-  --text: #111111;
-
-  --text-secondary: #555555;
-
   --card: #ffffff;
-
+  --card-hover: #f6f6f6;
   --navbar: rgba(255, 255, 255, 0.82);
 
-  --gold: #d4af37;
+  /* Text */
+  --text: #181818;
+  --text-secondary: #303030;
+  --text-muted: #666666;
 
+  /* Brand */
+  --gold: #d4af37;
+  --primary: #d4af37;
+  --primary-light: #ffd76a;
   --gradient-gold: linear-gradient(135deg, #d4af37, #ffd76a);
+
+  /* Border */
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(212, 175, 55, 0.35);
+
+  /* Shadow */
+  --shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+
+  /* Button */
+  --button-text: #111111;
+
+  /* Input */
+  --input-bg: #ffffff;
+  --input-text: #111111;
+  --placeholder: #666666;
+
+  /* Layout */
+  --radius: 18px;
+  --container: 1280px;
+  --transition: 0.35s ease;
 }

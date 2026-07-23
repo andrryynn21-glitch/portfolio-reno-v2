@@ -131,7 +131,7 @@
 }
 
 .about-content p {
-  color: var(--text-secondary);
+  color: var(--text);
 
   font-size: 18px;
 
@@ -239,7 +239,7 @@
 }
 
 .stat-card span {
-  color: var(--text-secondary);
+  color: var(--text);
 
   font-size: 15px;
 }
