@@ -1,39 +1,115 @@
-@import "./styles/variables.css";
+:root {
+  font-family: "Manrope", sans-serif;
+  color: #243c31;
+  background: #f6f5ee;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --background: #f6f5ee;
+  --surface: #fffef8;
+  --surface-muted: #edeee4;
+  --ink: #243c31;
+  --muted: #5d695c;
+  --line: #d9ddd0;
+  --forest: #193d32;
+  --accent: #d7ef89;
+  --action: #193d32;
+  --on-action: #f6f5ee;
+  --serif: "DM Serif Display", Georgia, serif;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #14251f;
+  --surface: #1d3027;
+  --surface-muted: #253b30;
+  --ink: #f0f1e7;
+  --muted: #b1beb1;
+  --line: #3b5042;
+  --action: #d7ef89;
+  --on-action: #193d32;
+}
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 106px;
 }
-
 body {
+  margin: 0;
+  min-width: 320px;
   background: var(--background);
-
-  color: var(--white);
-
-  font-family: var(--body-font);
+  color: var(--ink);
 }
-
-a {
-  text-decoration: none;
-
+button,
+input,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+textarea,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+summary {
+  cursor: pointer;
+}
+button {
   color: inherit;
 }
-
-button {
-  font-family: inherit;
+a {
+  color: inherit;
+  text-decoration: none;
 }
-
 img {
-  max-width: 100%;
-
   display: block;
+  max-width: 100%;
+}
+svg {
+  flex-shrink: 0;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+::selection {
+  color: #193d32;
+  background: #d7ef89;
+}
+:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 5px;
+}
+main:focus {
+  outline: none;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
-ul {
-  list-style: none;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

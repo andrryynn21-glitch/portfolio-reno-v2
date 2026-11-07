@@ -1,139 +1,205 @@
-import "../styles/Projects.css";
-
+import { useState } from "react";
+import { FiArrowUpRight, FiPlus } from "react-icons/fi";
 import projects from "../data/projects";
 
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import { motion } from "framer-motion";
-import Tilt from "react-parallax-tilt";
-import SectionTitle from "./common/SectionTitle";
-function Projects() {
+const filters = ["Semua", "Website", "Aplikasi"];
+const statusLabels = {
+  completed: "Selesai",
+  development: "Dalam pengembangan",
+  published: "Tayang publik",
+};
+
+export default function Projects() {
+  const [filter, setFilter] = useState("Semua");
+  const visibleProjects = projects.filter(
+    (project) => filter === "Semua" || project.category === filter,
+  );
+
   return (
-    <section id="projects" className="projects">
-      {/* ================= TITLE ================= */}
-
-      <SectionTitle badge="PORTFOLIO" title="Featured Projects">
-        Berikut beberapa project yang saya kembangkan menggunakan React,
-        JavaScript, PHP, MySQL, serta teknologi web modern dengan fokus pada
-        performa, desain premium, dan pengalaman pengguna yang responsif.
-      </SectionTitle>
-
-      {/* ================= GRID ================= */}
-
-      <div className="projects-grid">
-        {projects.map((project, index) => (
-          <Tilt
-            key={project.id}
-            tiltMaxAngleX={8}
-            tiltMaxAngleY={8}
-            perspective={1200}
-            scale={1.02}
-            transitionSpeed={1200}
-            glareEnable={true}
-            glareMaxOpacity={0.15}
-            glareColor="#ffffff"
-            glarePosition="all"
-          >
-            <motion.div
-              className="project-card"
-              initial={{
-                opacity: 0,
-                y: 60,
-                scale: 0.95,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-              whileHover={{
-                y: -8,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.12,
-              }}
-              viewport={{
-                once: true,
-              }}
+    <section
+      id="projects"
+      className="section projects-section container"
+      aria-labelledby="projects-heading"
+    >
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">01 / PILIHAN KARYA</p>
+          <h2 id="projects-heading">
+            Lebih dari ide.
+            <br />
+            <em>Ini yang saya bangun.</em>
+          </h2>
+        </div>
+        <p>
+          Website bisnis, aplikasi operasional, sampai eksplorasi pribadi.
+          Setiap proyek adalah ruang untuk belajar dan menyelesaikan kebutuhan
+          yang berbeda.
+        </p>
+      </div>
+      <div className="project-toolbar">
+        <div
+          className="project-filters"
+          role="group"
+          aria-label="Filter kategori proyek"
+        >
+          {filters.map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={filter === item}
+              onClick={() => setFilter(item)}
             >
-              {/* IMAGE */}
-
-              <div className="project-image">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                />
-
-                <div className="project-overlay">
-                  <h4>{project.title}</h4>
-
-                  {project.status === "completed" ? (
-                    <span className="project-status completed">
-                      ● Completed
-                    </span>
-                  ) : (
-                    <span className="project-status development">
-                      ● In Development
-                    </span>
-                  )}
+              {item}
+              <span>
+                {item === "Semua"
+                  ? projects.length
+                  : projects.filter((p) => p.category === item).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <span className="project-count" role="status">
+          {visibleProjects.length} karya ditampilkan
+        </span>
+      </div>
+      <div className="projects-grid">
+        {visibleProjects.map((project) => (
+          <article
+            className={`project-card project-${project.id}`}
+            key={project.id}
+          >
+            <div className="project-visual">
+              <span className={`project-status ${project.status}`}>
+                <span />
+                {statusLabels[project.status]}
+              </span>
+              {project.image ? (
+                <a
+                  className="project-image-frame"
+                  href={project.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Buka tangkapan layar ${project.title}`}
+                >
+                  <div className="project-image-bar">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                  <img
+                    src={project.image}
+                    alt={project.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                    width="800"
+                    height="450"
+                  />
+                </a>
+              ) : (
+                <div
+                  className="portfolio-art"
+                  aria-label="Identitas visual portofolio Reno"
+                >
+                  <div>
+                    reno<span>.</span>
+                    <small>PORTFOLIO / 2026</small>
+                  </div>
+                  <p>
+                    Curiosity.
+                    <br />
+                    <em>Meet possibility.</em>
+                  </p>
+                  <span className="portfolio-art-footer">
+                    IDE JADI NYATA. <FiArrowUpRight aria-hidden="true" />
+                  </span>
                 </div>
-              </div>
-
-              {/* CONTENT */}
-
-              <div className="project-content">
-                <span className="project-category">{project.category}</span>
-
-                <h3 className="project-title">{project.title}</h3>
-
-                <p className="project-description">{project.description}</p>
-
-                {/* TECH */}
-
-                <div className="tech-stack">
-                  {project.tech.map((item, index) => (
-                    <span key={index} className="tech">
-                      {item}
-                    </span>
+              )}
+              <span className="project-number" aria-hidden="true">
+                {String(projects.indexOf(project) + 1).padStart(2, "0")}
+              </span>
+            </div>
+            {project.imageCapturedAt && (
+              <p className="project-capture">
+                <span>Tangkapan layar asli / klik gambar</span>
+                <time dateTime={project.imageCapturedAt}>
+                  {new Date(
+                    `${project.imageCapturedAt}T00:00:00Z`,
+                  ).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    timeZone: "UTC",
+                  })}
+                </time>
+              </p>
+            )}
+            <div className="project-content">
+              <p className="eyebrow project-category">{project.label}</p>
+              <h3>{project.title}</h3>
+              <p className="project-description">{project.description}</p>
+              {project.tech.length > 0 && (
+                <ul
+                  className="tech-list"
+                  aria-label={`Teknologi ${project.title}`}
+                >
+                  {project.tech.map((tech) => (
+                    <li key={tech}>{tech}</li>
                   ))}
+                </ul>
+              )}
+              <details className="project-details">
+                <summary>
+                  Tentang proyek <FiPlus aria-hidden="true" />
+                </summary>
+                <div className="project-case">
+                  <h4>Kebutuhan</h4>
+                  <p>{project.problem}</p>
+                  <h4>Pendekatan</h4>
+                  <p>{project.solution}</p>
+                  <h4>
+                    {project.featuresLabel ||
+                      (project.status === "development"
+                        ? "Cakupan pengembangan"
+                        : "Fitur utama")}
+                  </h4>
+                  <ul>
+                    {project.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                  <p className="project-note">{project.note}</p>
                 </div>
-
-                {/* BUTTON */}
-
-                <div className="project-links">
-                  {project.github && (
-                    <a
-                      className="project-btn"
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <FaGithub />
-                      Github
-                    </a>
-                  )}
-
-                  {project.demo && (
-                    <a
-                      className="project-btn"
-                      href={project.demo}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Live Demo
-                      <FaExternalLinkAlt />
-                    </a>
-                  )}
-                </div>
+              </details>
+              <div className="project-link-row">
+                {project.demo ? (
+                  <a
+                    href={project.demo}
+                    className="text-link"
+                    {...(project.demo.startsWith("https:")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    aria-label={`${project.id === "portfolio" ? "Kembali ke beranda" : "Lihat website"}: ${project.title}`}
+                  >
+                    {project.id === "portfolio"
+                      ? "Anda sedang di sini"
+                      : project.status === "development"
+                        ? "Lihat pratinjau"
+                        : "Lihat website"}
+                    <FiArrowUpRight aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span className="no-demo">Demo publik belum tersedia</span>
+                )}
+                <span className="project-kind">{project.category}</span>
               </div>
-            </motion.div>
-          </Tilt>
+            </div>
+          </article>
         ))}
       </div>
+      <p className="projects-note">
+        Karya ditampilkan sesuai tahap pengembangannya. Tidak semua proyek
+        memiliki demo publik.
+      </p>
     </section>
   );
 }
-
-export default Projects;

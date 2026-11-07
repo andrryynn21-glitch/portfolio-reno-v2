@@ -1,29 +1,8 @@
 const navLinks = [
-  {
-    id: 1,
-    title: "About",
-    href: "#about",
-  },
-  {
-    id: 2,
-    title: "Experience",
-    href: "#experience",
-  },
-  {
-    id: 3,
-    title: "Projects",
-    href: "#projects",
-  },
-  {
-    id: 4,
-    title: "Skills",
-    href: "#skills",
-  },
-  {
-    id: 5,
-    title: "Contact",
-    href: "#contact",
-  },
+  { id: "projects", title: "Karya", href: "#projects" },
+  { id: "about", title: "Tentang", href: "#about" },
+  { id: "skills", title: "Pendekatan", href: "#skills" },
+  { id: "experience", title: "Perjalanan", href: "#experience" },
 ];
 
 export default navLinks;

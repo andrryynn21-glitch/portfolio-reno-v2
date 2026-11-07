@@ -1,191 +1,222 @@
-import "../styles/Contact.css";
-
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
-import toast from "react-hot-toast";
-import SectionTitle from "./common/SectionTitle";
-import profile from "../data/profile";
+import { useState } from "react";
 import {
-  FaEnvelope,
-  FaWhatsapp,
-  FaMapMarkerAlt,
-  FaGithub,
-  FaLinkedin,
-} from "react-icons/fa";
+  FiArrowUpRight,
+  FiCheck,
+  FiCopy,
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+} from "react-icons/fi";
+import profile from "../data/profile";
 
-function Contact() {
-  const form = useRef();
+const emailConfigured = Boolean(
+  import.meta.env.VITE_EMAILJS_SERVICE_ID &&
+  import.meta.env.VITE_EMAILJS_TEMPLATE_ID &&
+  import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+);
 
-  const [loading, setLoading] = useState(false);
+export default function Contact() {
+  const [status, setStatus] = useState({ type: "idle", message: "" });
+  const [copyStatus, setCopyStatus] = useState("");
+  const loading = status.type === "sending";
 
-  const sendEmail = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-
+  async function sendMessage(event) {
+    event.preventDefault();
+    if (loading) return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    if (!["name", "email", "message"].every((key) => data.get(key)?.trim())) {
+      setStatus({
+        type: "error",
+        message: "Lengkapi nama, email, dan pesan dengan teks yang valid.",
+      });
+      return;
+    }
+    if (!emailConfigured) {
+      const subject = encodeURIComponent(
+        `Pesan portofolio dari ${data.get("name").trim()}`,
+      );
+      const body = encodeURIComponent(
+        `${data.get("message").trim()}\n\n${data.get("name").trim()}\n${data.get("email").trim()}`,
+      );
+      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      setStatus({
+        type: "draft",
+        message:
+          "Draf dibuka di aplikasi email Anda, belum dikirim. Jika tidak terbuka, gunakan tautan email atau WhatsApp di samping.",
+      });
+      return;
+    }
+    setStatus({ type: "sending", message: "Sedang mengirim pesan..." });
     try {
+      const { default: emailjs } = await import("@emailjs/browser");
       await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        form,
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
       );
-
-      toast.success("Message sent successfully!");
-
-      form.current.reset();
-    } catch (error) {
-      console.error(error);
-
-      toast.error("Failed to send message.");
+      form.reset();
+      setStatus({
+        type: "success",
+        message: "Pesan berhasil dikirim. Terima kasih sudah menghubungi saya.",
+      });
+    } catch {
+      setStatus({
+        type: "error",
+        message:
+          "Pesan belum terkirim. Silakan coba lagi atau hubungi saya langsung melalui email / WhatsApp. Pesan Anda tetap tersimpan di formulir.",
+      });
     }
+  }
 
-    setLoading(false);
-  };
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopyStatus("Alamat email disalin.");
+    } catch {
+      setCopyStatus(
+        `Tidak dapat menyalin otomatis. Alamat email: ${profile.email}`,
+      );
+    }
+  }
+
   return (
-    <section id="contact" className="contact">
-      <SectionTitle badge="CONTACT" title="Let's Work Together">
-        Saya terbuka untuk peluang kerja, freelance, maupun kolaborasi dalam
-        pengembangan website modern. Jangan ragu menghubungi saya apabila
-        memiliki project atau ingin berdiskusi.
-      </SectionTitle>
-
-      <div className="contact-wrapper">
-        {/* LEFT */}
-
-        <motion.div
-          className="contact-info"
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-        >
-          <h3>Get In Touch</h3>
-
+    <section
+      id="contact"
+      className="contact-section"
+      aria-labelledby="contact-heading"
+    >
+      <div className="container contact-layout">
+        <div className="contact-copy">
+          <p className="eyebrow">05 / MULAI PERCAKAPAN</p>
+          <h2 id="contact-heading">
+            Punya ide?
+            <br />
+            <em>Mari buat berarti.</em>
+          </h2>
           <p>
-            Saya selalu antusias terhadap kesempatan baru, baik untuk bekerja
-            sama dalam project, freelance, maupun posisi Frontend Developer.
+            Saya terbuka untuk peluang magang, kolaborasi proyek, dan percakapan
+            seputar teknologi. Ceritakan apa yang sedang Anda bangun.
           </p>
-
-          <div className="contact-items">
-            <a className="contact-item" href="mailto:andrryynn212@gmail.com">
-              <div className="contact-icon">
-                <FaEnvelope />
-              </div>
-
-              <div>
-                <small>Email</small>
-
-                <span>{profile.email}</span>
-              </div>
+          <div className="availability">
+            <span /> Terbuka untuk magang & kolaborasi
+          </div>
+          <div className="contact-email">
+            <a href={`mailto:${profile.email}`}>
+              {profile.email}
+              <FiArrowUpRight aria-hidden="true" />
             </a>
-
+            <button
+              className="icon-button"
+              type="button"
+              onClick={copyEmail}
+              aria-label="Salin alamat email"
+            >
+              {copyStatus === "Alamat email disalin." ? (
+                <FiCheck aria-hidden="true" />
+              ) : (
+                <FiCopy aria-hidden="true" />
+              )}
+            </button>
+          </div>
+          <p className="copy-status" role="status">
+            {copyStatus}
+          </p>
+          <div className="contact-links">
             <a
-              className="contact-item"
               href={profile.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className="contact-icon">
-                <FaWhatsapp />
-              </div>
-
-              <div>
-                <small>WhatsApp</small>
-
-                <span>{profile.phone}</span>
-              </div>
+              WhatsApp <FiArrowUpRight aria-hidden="true" />
             </a>
-
-            <a
-              className="contact-item"
-              href={`https://maps.google.com/?q=${encodeURIComponent(profile.location)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="contact-icon">
-                <FaMapMarkerAlt />
-              </div>
-
-              <div>
-                <small>Location</small>
-
-                <span>{profile.location}</span>
-              </div>
-            </a>
-          </div>
-
-          <div className="contact-social">
             <a href={profile.github} target="_blank" rel="noopener noreferrer">
-              <FaGithub />
+              <FiGithub aria-hidden="true" /> GitHub
             </a>
-
             <a
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaLinkedin />
+              <FiLinkedin aria-hidden="true" /> LinkedIn
             </a>
           </div>
-
-          <div className="availability">
-            <span className="status-dot"></span>
-            Available for Freelance & Full Time
-          </div>
-        </motion.div>
-
-        {/* RIGHT */}
-
-        <motion.form
-          ref={form}
-          onSubmit={sendEmail}
+        </div>
+        <form
           className="contact-form"
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
+          onSubmit={sendMessage}
+          aria-busy={loading}
+          aria-describedby="form-note"
         >
-          <div className="input-group">
-            <label>Nama</label>
-
+          <h3>Satu pesan, banyak kemungkinan.</h3>
+          <p id="form-note">
+            {emailConfigured
+              ? "Pesan Anda dikirim melalui EmailJS. Nama dan email digunakan untuk membalas pesan."
+              : "Formulir ini menyiapkan draf di aplikasi email Anda. Anda yang mengirimkannya."}
+          </p>
+          <div className="form-field">
+            <label htmlFor="contact-name">Nama Anda</label>
             <input
-              type="text"
+              id="contact-name"
               name="name"
-              placeholder="Masukkan nama Anda"
+              autoComplete="name"
+              placeholder="Siapa nama Anda?"
               required
+              minLength={2}
+              maxLength={100}
+              readOnly={loading}
             />
           </div>
-
-          <div className="input-group">
-            <label>Email</label>
+          <div className="form-field">
+            <label htmlFor="contact-email">Alamat email</label>
             <input
-              type="email"
+              id="contact-email"
               name="email"
-              placeholder="Masukkan email Anda"
+              type="email"
+              autoComplete="email"
+              placeholder="nama@perusahaan.com"
               required
-            />{" "}
-          </div>
-
-          <div className="input-group">
-            <label>Pesan</label>
-
-            <textarea
-              name="message"
-              rows="6"
-              placeholder="Tulis pesan Anda..."
-              required
+              maxLength={254}
+              readOnly={loading}
             />
           </div>
-
-          <button type="submit" className="send-btn" disabled={loading}>
-            {loading ? "Sending..." : "Send Message"}
+          <div className="form-field">
+            <label htmlFor="contact-message">
+              Apa yang ingin Anda diskusikan?
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={4}
+              placeholder="Tentang ide, proyek, atau peluang kolaborasi..."
+              required
+              minLength={10}
+              maxLength={5000}
+              readOnly={loading}
+            />
+          </div>
+          <button
+            className="button button-lime"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Mengirim pesan..."
+              : emailConfigured
+                ? "Kirim pesan"
+                : "Buka aplikasi email"}
+            <FiMail aria-hidden="true" />
           </button>
-        </motion.form>
+          <p
+            className={`form-status ${status.type}`}
+            role="status"
+            aria-live="polite"
+          >
+            {status.message}
+          </p>
+        </form>
       </div>
     </section>
   );
 }
-
-export default Contact;

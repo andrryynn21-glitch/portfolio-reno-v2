@@ -1,93 +1,73 @@
-import "../styles/About.css";
-
+import { FiArrowDownRight, FiDownload, FiMapPin } from "react-icons/fi";
 import profile from "../data/profile";
-import aboutImage from "../assets/images/about/about.png";
+import portrait from "../assets/images/profile.png";
+import cvFile from "../assets/pdf/CV_Reno_Andrian.pdf";
 
-import { motion } from "framer-motion";
-import { FaCheckCircle } from "react-icons/fa";
-
-import { fadeUp } from "../animations/variants";
-
-function About() {
+export default function About() {
   return (
-    <section id="about" className="about">
-      {/* Background Glow */}
-      <div className="about-glow"></div>
-
-      <div className="about-container">
-        {/* ================= LEFT ================= */}
-
-        <motion.div
-          className="about-image-wrapper"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <div className="about-image-card">
-            <img src={aboutImage} alt={profile.name} />
+    <section
+      id="about"
+      className="about-section"
+      aria-labelledby="about-heading"
+    >
+      <div className="container about-layout">
+        <div className="about-portrait">
+          <p className="eyebrow">THE HUMAN BEHIND THE BUILDS</p>
+          <div className="portrait-frame">
+            <img
+              src={portrait}
+              alt="Potret Reno Andrian"
+              width="500"
+              height="500"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
-        </motion.div>
-
-        {/* ================= RIGHT ================= */}
-
-        <motion.div
-          className="about-content"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <span className="about-subtitle">ABOUT ME</span>
-
-          <h2>
-            Passionate Frontend Developer &
-            <span className="gold"> Information Systems Student</span>
+          <div className="portrait-caption">
+            <span>Reno Andrian</span>
+            <FiArrowDownRight aria-hidden="true" />
+          </div>
+          <p className="portrait-location">
+            <FiMapPin aria-hidden="true" /> {profile.location}, Indonesia
+          </p>
+        </div>
+        <div className="about-copy">
+          <p className="eyebrow">02 / SEDIKIT TENTANG SAYA</p>
+          <h2 id="about-heading">
+            Seorang mahasiswa.
+            <br />
+            Banyak rasa ingin tahu.
+            <br />
+            <em>Selalu ingin membuat.</em>
           </h2>
-
           <p>{profile.about}</p>
-
-          {/* Highlight */}
-
-          <div className="about-highlights">
-            {profile.highlights.map((item, index) => (
-              <motion.div
-                key={index}
-                className="highlight-card"
-                whileHover={{
-                  y: -6,
-                  scale: 1.03,
-                }}
-              >
-                <FaCheckCircle />
-
-                <span>{item}</span>
-              </motion.div>
-            ))}
+          <p>
+            Saya tidak membatasi diri pada satu label pengembang. Saya ingin
+            memahami sebuah kebutuhan, mengeksplorasi solusinya dengan bantuan
+            AI, lalu mewujudkannya menjadi website atau aplikasi yang bisa
+            digunakan.
+          </p>
+          <blockquote>
+            "AI membantu membuka kemungkinan.
+            <br />
+            Rasa ingin tahu membuat saya terus melangkah."
+          </blockquote>
+          <div className="about-footer">
+            <span>
+              MAHASISWA SISTEM INFORMASI
+              <br />
+              <strong>Universitas Pamulang</strong>
+            </span>
+            <a
+              className="button button-outline"
+              href={cvFile}
+              download="CV_Reno_Andrian.pdf"
+            >
+              Unduh CV <FiDownload aria-hidden="true" />
+            </a>
           </div>
-
-          {/* Stats */}
-
-          <div className="about-stats">
-            {profile.stats.map((item, index) => (
-              <motion.div
-                key={index}
-                className="stat-card"
-                whileHover={{
-                  y: -8,
-                  scale: 1.04,
-                }}
-              >
-                <h3>{item.number}</h3>
-
-                <span>{item.title}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
-
-export default About;

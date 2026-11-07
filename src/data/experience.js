@@ -1,52 +1,39 @@
 const experience = [
   {
-    id: 1,
-    year: "2026",
-    title: "Portfolio Reno V2",
-    company: "Personal Project",
+    id: "university",
+    year: "2025 - sekarang",
+    title: "S1 Sistem Informasi",
+    company: "Universitas Pamulang, Kampus Serang",
+    type: "Pendidikan",
     description:
-      "Membangun website portfolio modern menggunakan React.js, Framer Motion, serta desain premium yang responsif.",
-    tech: ["React", "Framer Motion", "CSS"],
+      "Melanjutkan pembelajaran teknologi dalam konteks sistem informasi, kebutuhan pengguna, dan pengembangan solusi digital.",
   },
-
   {
-    id: 2,
-    year: "2026",
-    title: "Website Undangan Digital",
-    company: "Personal Project",
+    id: "school",
+    year: "2022 - 2025",
+    title: "Rekayasa Perangkat Lunak",
+    company: "SMKN 1 Kragilan",
+    type: "Pendidikan",
     description:
-      "Mengembangkan website undangan digital premium dengan animasi modern, RSVP, galeri, countdown, dan musik.",
-    tech: ["React", "Vite", "Animation"],
+      "Fondasi awal dalam pemrograman dan pengembangan perangkat lunak, yang menjadi bekal untuk membangun proyek sendiri.",
   },
-
   {
-    id: 3,
-    year: "2025",
-    title: "Aplikasi Kasir UMKM",
-    company: "Academic Project",
+    id: "rajeg",
+    year: "2023 - 2024",
+    title: "Teknis jaringan",
+    company: "Rajeg.Net",
+    type: "Praktik kerja lapangan",
     description:
-      "Membangun aplikasi kasir berbasis web dengan transaksi, laporan penjualan, dashboard admin, dan database MySQL.",
-    tech: ["HTML", "CSS", "PHP", "MySQL"],
+      "Membantu instalasi internet, konfigurasi modem, dan penanganan kendala koneksi pelanggan. Belajar menyelesaikan masalah teknis secara langsung.",
   },
-
   {
-    id: 4,
+    id: "inspektorat",
     year: "2023",
-    title: "PKL Rajeg.net",
-    company: "Internship",
+    title: "Administrasi & pengolahan data",
+    company: "Inspektorat Provinsi Banten",
+    type: "Praktik kerja lapangan",
     description:
-      "Melakukan instalasi jaringan internet, konfigurasi modem, dan troubleshooting perangkat pelanggan.",
-    tech: ["Networking", "Modem", "Troubleshooting"],
-  },
-
-  {
-    id: 5,
-    year: "2023",
-    title: "PKL Inspektorat Provinsi Banten",
-    company: "Internship",
-    description:
-      "Membantu administrasi perkantoran, input data, serta pengolahan dokumen menggunakan Microsoft Office.",
-    tech: ["Excel", "Word", "Administration"],
+      "Membantu input data, pengolahan dokumen, dan pengarsipan menggunakan Microsoft Office. Melatih ketelitian dan tanggung jawab terhadap pekerjaan.",
   },
 ];
 

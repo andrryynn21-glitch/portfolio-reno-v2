@@ -1,144 +1,125 @@
-import "./../styles/Hero.css";
-
-import profile from "../data/profile";
-
-import profileImage from "../assets/images/profile.png";
-import cvFile from "../assets/pdf/CV_Reno_Andrian.pdf";
-
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import Button from "./common/Button";
 import {
-  FaGithub,
-  FaLinkedin,
-  FaInstagram,
-  FaEnvelope,
-  FaDownload,
-  FaArrowRight,
-} from "react-icons/fa";
+  FiArrowDown,
+  FiArrowUpRight,
+  FiAperture,
+  FiCheck,
+  FiCode,
+  FiCommand,
+} from "react-icons/fi";
+import profile from "../data/profile";
+import projects from "../data/projects";
+import portrait from "../assets/images/profile.png";
+import yammatcha from "../assets/images/projects/yammatcha.webp";
 
-import { fadeUp, staggerContainer } from "../animations/variants";
-function Hero() {
+export default function Hero() {
   return (
-    <section id="home" className="hero">
-      {/* ================= LEFT ================= */}
+    <section
+      id="home"
+      className="hero container"
+      aria-labelledby="hero-heading"
+    >
+      <div className="hero-copy">
+        <div className="availability">
+          <span /> Terbuka untuk magang & kolaborasi
+        </div>
+        <p className="eyebrow hero-intro">RENO ANDRIAN / AI-ASSISTED BUILDER</p>
+        <h1 id="hero-heading">
+          Ide jadi nyata.
+          <br />
+          Dengan teknologi
+          <br />
+          dan <em>rasa ingin tahu.</em>
+        </h1>
+        <p className="hero-description">{profile.description}</p>
+        <div className="hero-actions">
+          <a href="#projects" className="button button-primary">
+            Jelajahi karya <FiArrowDown aria-hidden="true" />
+          </a>
+          <a href="#about" className="text-link">
+            Kenali saya <FiArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+        <div className="hero-footnote">
+          <span className="mini-star" aria-hidden="true">
+            *
+          </span>{" "}
+          Bukan sekadar mencoba tools. Membangun sesuatu yang berguna.
+        </div>
+      </div>
 
-      <motion.div
-        className="hero-left"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
+      <div
+        className="hero-art"
+        aria-label="Eksplorasi ide menjadi produk digital"
       >
-        <motion.div className="hero-badge" variants={fadeUp}>
-          <span className="dot"></span>
-          AVAILABLE FOR INTERNSHIP
-        </motion.div>
-
-        <motion.h1 variants={fadeUp}>
-          {profile.name.split(" ")[0]}{" "}
-          <span className="gold">
-            {profile.name.split(" ").slice(1).join(" ")}
-          </span>
-        </motion.h1>
-
-        <motion.h2 variants={fadeUp}>
-          <TypeAnimation
-            sequence={[
-              "Frontend Developer",
-              2000,
-              "React Developer",
-              2000,
-              "UI Developer",
-              2000,
-              "Information Systems Student",
-              2000,
-            ]}
-            wrapper="span"
-            speed={50}
-            repeat={Infinity}
+        <div className="art-grid" aria-hidden="true" />
+        <div className="art-topline">
+          <span>THE BUILDER'S DESK</span>
+          <FiCommand aria-hidden="true" />
+        </div>
+        <div className="idea-note">
+          <span className="note-pin" />
+          <span className="eyebrow">BERAWAL DARI</span>
+          <p>
+            "Bagaimana kalau
+            <br />
+            ide ini dibuat nyata?"
+          </p>
+          <span className="note-line" />
+        </div>
+        <div className="browser-preview">
+          <div className="browser-bar">
+            <div className="browser-dots">
+              <i />
+              <i />
+              <i />
+            </div>
+            <span>yammatcha / website</span>
+            <FiArrowUpRight aria-hidden="true" />
+          </div>
+          <img
+            src={yammatcha}
+            alt="Cuplikan website Yammatcha, salah satu karya Reno"
+            width="800"
+            height="450"
+            fetchPriority="high"
           />
-        </motion.h2>
+        </div>
+        <div className="build-label">
+          <FiCode aria-hidden="true" />
+          <div>
+            <strong>Ide. Eksplorasi. Implementasi.</strong>
+            <span>Human curiosity, AI-assisted.</span>
+          </div>
+          <span className="build-check">
+            <FiCheck aria-hidden="true" />
+          </span>
+        </div>
+        <div className="portrait-label">
+          <img src={portrait} alt="" width="48" height="48" />
+          <div>
+            <strong>Reno Andrian</strong>
+            <span>Selalu ada hal baru untuk dipelajari.</span>
+          </div>
+        </div>
+        <FiAperture className="art-spark" aria-hidden="true" />
+        <div className="art-bottomline">
+          <span>LEARNING BY BUILDING</span>
+          <span>EST. IN CURIOSITY</span>
+        </div>
+      </div>
 
-        <motion.p variants={fadeUp}>{profile.description}</motion.p>
-
-        <motion.div className="hero-buttons" variants={fadeUp}>
-          {" "}
-          <Button href={cvFile} download variant="primary">
-            <FaDownload />
-            Download CV
-          </Button>
-          <a href="#projects" className="btn-secondary">
-            <span>View Projects</span>
-            <FaArrowRight />
-          </a>
-        </motion.div>
-        <motion.div className="hero-socials" variants={fadeUp}>
-          {" "}
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Github Profile"
-          >
-            <FaGithub />
-          </a>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn Profile"
-          >
-            <FaLinkedin />
-          </a>
-          <a
-            href={profile.instagram}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram Profile"
-          >
-            <FaInstagram />
-          </a>
-          <a href={`mailto:${profile.email}`} aria-label="Send Email">
-            <FaEnvelope />
-          </a>
-        </motion.div>
-      </motion.div>
-
-      {/* ================= RIGHT ================= */}
-
-      <motion.div
-        className="hero-right"
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-        // Floating Animation
-        transition={{
-          duration: 0.8,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-      >
-        <motion.div
-          className="profile-card"
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 1.5, 0, -1.5, 0],
-            scale: [1, 1.02, 1],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div className="profile-glow"></div>
-
-          <img src={profileImage} alt={profile.name} />
-        </motion.div>
-      </motion.div>
+      <div className="hero-bottom">
+        <span>
+          BERBASIS DI <strong>{profile.location.toUpperCase()}</strong>
+        </span>
+        <span>
+          <strong>{String(projects.length).padStart(2, "0")}</strong> PROYEK
+          TERDOKUMENTASI
+        </span>
+        <a href="#projects">
+          SCROLL UNTUK EKSPLORASI <FiArrowDown aria-hidden="true" />
+        </a>
+      </div>
     </section>
   );
 }
-
-export default Hero;

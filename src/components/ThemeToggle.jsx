@@ -1,19 +1,41 @@
-import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FiMoon, FiSun } from "react-icons/fi";
 
-function ThemeToggle() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+export default function ThemeToggle() {
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem("theme") === "dark" ? "dark" : "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", theme === "dark" ? "#14251f" : "#f6f5ee");
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      // Theme switching still works when the browser blocks storage.
+    }
+  }, [theme]);
 
   return (
     <button
-      className="theme-toggle"
-      onClick={toggleTheme}
-      aria-label="Toggle Theme"
+      type="button"
+      className="icon-button"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      aria-label={
+        theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"
+      }
     >
-      {theme === "dark" ? <FaSun /> : <FaMoon />}
+      {theme === "dark" ? (
+        <FiSun aria-hidden="true" />
+      ) : (
+        <FiMoon aria-hidden="true" />
+      )}
     </button>
   );
 }
-
-export default ThemeToggle;

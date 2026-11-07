@@ -1,99 +1,127 @@
-import "../styles/Navbar.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FiArrowUpRight, FiMenu, FiX } from "react-icons/fi";
 import navLinks from "../data/navLinks";
-import { FaBars, FaTimes } from "react-icons/fa";
 import ThemeToggle from "./ThemeToggle";
 
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("");
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Glass Navbar
-      setScrolled(window.scrollY > 80);
-
-      // Active Menu
-      const sections = document.querySelectorAll("section");
-
-      let current = "";
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 150;
-
-        if (window.scrollY >= sectionTop) {
-          current = section.getAttribute("id");
-        }
-      });
-
-      if (current) {
-        setActive(current);
-      }
+    let observer;
+    const observeSections = () => {
+      observer?.disconnect();
+      // Pixel margins keep the active band consistent on wide, short viewports.
+      const top = Math.min(100, window.innerHeight * 0.2);
+      const bottom = Math.max(0, window.innerHeight - top - 100);
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) setActive(entry.target.id);
+          }
+        },
+        { rootMargin: `-${top}px 0px -${bottom}px 0px` },
+      );
+      document
+        .querySelectorAll("main section[id]")
+        .forEach((section) => observer.observe(section));
     };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Jalankan sekali saat halaman dibuka
-    handleScroll();
-
+    observeSections();
+    window.addEventListener("resize", observeSections);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+      window.removeEventListener("resize", observeSections);
     };
   }, []);
 
-  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-
+    if (!menuOpen) return;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const closeOutside = (event) => {
+      if (!navRef.current?.contains(event.target)) setMenuOpen(false);
+    };
+    const desktop = window.matchMedia("(min-width: 861px)");
+    const closeOnResize = () => {
+      if (desktop.matches) setMenuOpen(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("pointerdown", closeOutside);
+    desktop.addEventListener("change", closeOnResize);
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("pointerdown", closeOutside);
+      desktop.removeEventListener("change", closeOnResize);
     };
   }, [menuOpen]);
 
   return (
-    <header className="header">
-      <div className="container">
-        <nav className={scrolled ? "navbar scrolled" : "navbar"}>
-          {/* Logo */}
-          <a href="#home" className="logo">
-            R<span>A.</span>
-          </a>
-
-          <div className="nav-actions">
-            <ThemeToggle />
-
-            {/* Hamburger */}
-            <button
-              className="menu-toggle"
-              aria-label={
-                menuOpen ? "Close navigation menu" : "Open navigation menu"
-              }
-              onClick={() => setMenuOpen(!menuOpen)}
+    <header className="site-header">
+      <nav
+        className="container navbar"
+        aria-label="Navigasi utama"
+        ref={navRef}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget))
+            setMenuOpen(false);
+        }}
+      >
+        <a
+          className="wordmark"
+          href="#home"
+          aria-label="Reno Andrian, beranda"
+          onClick={() => setMenuOpen(false)}
+        >
+          reno<span className="brand-dot">.</span>
+          <span className="wordmark-note">PORTFOLIO</span>
+        </a>
+        <div
+          id="navigation-menu"
+          className={`nav-menu${menuOpen ? " is-open" : ""}`}
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.href}
+              aria-current={active === link.id ? "location" : undefined}
+              onClick={() => setMenuOpen(false)}
             >
-              {menuOpen ? <FaTimes /> : <FaBars />}
-            </button>
-          </div>
-
-          {/* Menu */}
-          <ul className={menuOpen ? "nav-menu active" : "nav-menu"}>
-            {navLinks.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={
-                    active === link.href.replace("#", "") ? "active" : ""
-                  }
-                >
-                  {link.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+              {link.title}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="nav-contact"
+            onClick={() => setMenuOpen(false)}
+          >
+            Mari terhubung <FiArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+        <div className="nav-actions">
+          <ThemeToggle />
+          <button
+            className="icon-button menu-toggle"
+            ref={toggleRef}
+            type="button"
+            aria-label={menuOpen ? "Tutup navigasi" : "Buka navigasi"}
+            aria-controls="navigation-menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? (
+              <FiX aria-hidden="true" />
+            ) : (
+              <FiMenu aria-hidden="true" />
+            )}
+          </button>
+        </div>
+      </nav>
     </header>
   );
 }
-
-export default Navbar;
